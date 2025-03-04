@@ -1,0 +1,453 @@
+/* Thiết kế toàn bộ trang đăng nhập */
+body.login-page {
+    font-family: Arial, sans-serif;
+    background-color: #DDD;
+    color: #333;
+}
+* {
+    margin: 0;
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+/* Thiết kế phần header chung */
+header {
+    background-color: rgba(51, 51, 51, 0.6); /* Màu nền tối 60% */
+    color: white;
+    position: fixed; /* Đảm bảo header luôn hiển thị ở trên */
+    top: 0; /* Đặt header ở vị trí trên cùng */
+    left: 0;
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
+    backdrop-filter: blur(5px); /* Làm mờ nền nếu muốn */
+ 
+}
+
+/* Container cho các phần left, center, và right trong header1 */
+#header1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+    position: relative; /* Giữ header1 trong phạm vi của header */
+    flex-wrap: wrap;
+}
+
+/* Phần bên trái (logo) */
+#left h1 {
+    font-size: 24px;
+    font-family: 'Arial', sans-serif;
+}
+
+#left h1:hover {
+    color: #f0a500; /* Màu sắc khi hover lên logo */
+}
+
+/* Phần bên phải (đăng nhập, đăng ký) */
+#right {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-right: 20px;
+}
+
+#right a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 16px;
+}
+
+#right a:hover {
+    text-decoration: underline; /* Gạch chân khi hover */
+}
+
+/* Phần tìm kiếm ở giữa */
+#center form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#center input {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    width: 300px; /* Chiều rộng cho input tìm kiếm */
+}
+
+#center button {
+    padding: 8px 15px;
+    font-size: 14px;
+    margin-left: 5px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #f0a500; /* Màu nền nút tìm kiếm */
+    color: white;
+}
+
+#center button:hover {
+    background-color: #d88f00; /* Màu nền khi hover lên nút tìm kiếm */
+}
+
+/* Thiết kế phần header phụ (header2) */
+#header2 {
+    background-color: rgba(68, 68, 68, 0.6); /* Màu nền tối 60% */
+    padding: 5px 0;
+    position: relative; /* Đảm bảo không bị dính vào header1 */
+}
+
+/* Thiết kế menu trong header2 */
+nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; /* Đảm bảo chiều rộng của menu 100% */
+    flex-wrap: wrap;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    width: 100%; /* Đảm bảo list chiếm toàn bộ chiều rộng của nav */
+    justify-content: space-around; /* Dãn đều các li */
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+}
+
+nav li {
+    flex: 1; /* Mỗi li sẽ chiếm 1 phần chiều rộng đều */
+    text-align: center; /* Căn giữa nội dung trong mỗi li */
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    display: block; /* Đảm bảo link chiếm đầy đủ chiều rộng của li */
+}
+
+nav a:hover {
+ /* Gạch chân khi hover lên link */
+    background-color: gray;
+  
+}
+
+/* Banner Image Style */
+#banner {
+    text-align: center;
+    background-color: #DDD; /* Màu nền của vùng xung quanh ảnh */
+    padding: 20px;
+    margin-top: 100px; /* Khoảng cách từ top */
+}
+
+#banner img {
+    width: 90%; /* Bạn có thể tùy chỉnh kích thước ảnh nếu cần */
+    height: 350px;
+    display: block; /* Loại bỏ khoảng trống dưới ảnh */
+    margin: 0 auto; /* Căn giữa ảnh theo chiều ngang */
+    border-radius: 10px; /* Bo góc cho ảnh */
+}
+
+/* Tạo phong cách cho toàn bộ trang */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #DDD;
+    color: #333;
+}
+
+/* Content */
+.content {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    flex-wrap: wrap; 
+    padding-bottom: 100px;;
+    flex-wrap: wrap;
+}
+
+.content .left {
+    width: 55%; 
+    background-color: whitesmoke;
+    border-radius: 10px;
+}
+
+.content .right {
+    width: 40%;
+    background-color: whitesmoke;
+    padding: 20px;
+    box-sizing: border-box;
+}
+#bxh-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+#bxh-header h2 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#bxh-header h2:hover {
+    color: #f0a500;
+}
+
+/* Container bảng xếp hạng */
+#rankings {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Danh sách bảng xếp hạng */
+.ranking-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    justify-content: flex-start; /* Đảm bảo các phần tử con căn lề trái */
+    flex-wrap: wrap;
+}
+
+.ranking-item .rank {
+    font-weight: bold;
+    color: #f0a500;
+    width: 40px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.manga-image {
+    width: 50px;
+    height: 70px;
+    margin-right: 10px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.manga-title {
+    flex-grow: 1;
+    font-size: 16px;
+    color: #333;
+}
+
+.chapter {
+    font-size: 14px;
+    color: #666;
+    margin-right: 15px;
+    text-align: left; /* Căn lề trái cho chapter */
+    width: 120px; /* Đảm bảo đủ không gian cho chữ */
+}
+
+.views {
+    font-size: 14px;
+    color: #666;
+    text-align: right; /* Đảm bảo phần views nằm ở phía phải */
+    width: 80px;
+}
+/* Phần bình luận */
+#comments {
+    margin-top: 30px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+/* Tiêu đề phần bình luận */
+#comments h3 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Danh sách bình luận */
+.comments-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.comment-avatar {
+    display: inline-block;
+    margin-right: 10px;
+}
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 40%; 
+    object-fit: cover;
+}
+
+/* Mỗi bình luận */
+.comment-item {
+    display: flex;
+    align-items: center; /* Align the avatar and text */
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+}
+
+/* Tên người bình luận */
+.comment-item strong {
+    color: #f0a500;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+/* Nội dung bình luận */
+.comment-item p {
+    margin: 5px 0;
+    font-size: 12px;
+    color: #333;
+}
+
+/* Tạo hiệu ứng hover cho mỗi bình luận */
+.comment-item:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Left section */
+.content .left h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-align: center;
+    margin-right:10px;
+}
+
+#recommend-manga ul {
+    display: flex; /* Sử dụng flexbox để các truyện hiển thị theo hàng ngang */
+    flex-wrap: wrap; /* Cho phép các truyện xuống dòng nếu không đủ không gian */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    justify-content: space-between; /* Dãn đều các phần tử trên mỗi dòng */
+}
+
+#recommend-manga ul li {
+    width: 48%; /* Mỗi truyện chiếm 48% chiều rộng, có thể thay đổi theo nhu cầu */
+    margin-bottom: 5px; /* Khoảng cách giữa các truyện */
+    text-align: center; /* Căn giữa các truyện */
+    padding-right:10px;
+}
+
+.manga-info {
+    text-align: center;
+}
+
+.manga-info img {
+    width: 150px;
+    height: 200px;
+    border-radius: 8px;
+    object-fit: cover; 
+}
+
+.manga-info a {
+    display: block;
+    margin-top: 10px;
+    text-decoration: none;
+    color:black;
+}
+
+/* Chương không sử dụng Flexbox, luôn ở dưới tên truyện và ảnh */
+.chapters {
+    padding-left: 0;
+    list-style: none;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.chapters li {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.chapters li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.chapters li a:hover {
+    color: #f0a500;
+    text-decoration: underline;
+}
+
+/* Right section */
+.content .right h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.content .right p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#bxh-header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+#bxh-header h2 {
+    margin: 0;
+    font-size: 16pt;
+    text-align: center;
+    padding: 10px;
+}
+
+#bxh-header h2:hover {
+    border-top: 2px solid #333;
+}
+
+#bxh-header h2:active {
+    border-top: 2px solid #333;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 0px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 1000; /* Đảm bảo footer luôn nằm trên các phần tử khác */
+    background-color: rgba(51, 51, 51, 0.6); /* Màu nền tối 60% */
+    backdrop-filter: blur(5px); /* Làm mờ nền nếu muốn */
+}
+footer p {
+    margin: 0;
+    padding: 10px 0;
+    font-size:10pt;
+}
+
