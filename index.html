@@ -6,8 +6,8 @@
     <title>Weebu Truyện</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.min.js"></script>
+    <link rel="icon" type="image/png" href="images/logo_title.png">
 </head>
 <body>
     <!-- Header -->
@@ -17,10 +17,11 @@
             <h1>Weebu Truyện</h1>
         </div>
         <div id="center">
-            <form action="#">
-                <input type="text" placeholder="Tìm kiếm truyện">
-                <button type="submit">Tìm</button>
-            </form>
+            <div id="search-container">
+                <input type="text" placeholder="Tìm kiếm truyện" id="searchInput" autocomplete="off">
+                <button type="submit" id="searchBtn">Tìm</button>
+                <ul id="searchSuggestions" class="dropdown"></ul>
+            </div>            
         </div>
         <div id="right">
             <a href="login.html">Đăng nhập</a>
@@ -43,10 +44,17 @@
 
     
     <!-- Banner -->
-    <div id="banner">
-        <img src="images\banner.png" alt="Banner">
-    </div>
-
+    <div class="banner-wrapper" id="banner-wrapper">
+        <div class="banner-container">
+          <div id="banner">
+            <img id="banner-prev" class="banner-img prev-img" src="images/banner5.jpg" alt="Previous Banner">
+            <img id="banner-current" class="banner-img current-img" src="images/banner.png" alt="Current Banner">
+            <img id="banner-next" class="banner-img next-img" src="images/banner2.jpg" alt="Next Banner">
+          </div>
+        </div>
+      </div>
+      
+         
     <!-- Content -->
     <div class="content">
         <div class="left">
@@ -366,8 +374,15 @@
             </div>
         </div>       
     </div>
+    <!-- Nút lên đầu trang -->
+<button id="scrollToTopBtn" title="Lên đầu trang">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
     <footer>
         <p>&copy;Weebu Truyện - Tự Hào Là Một Weebu Yêu Nước.</p>
     </footer>
+    <script src="main.js"></script>
+
 </body>
 </html>

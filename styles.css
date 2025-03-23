@@ -6,11 +6,13 @@
 }
 
 body {
+
     font-family: Arial, sans-serif;
     background-color: #DDD;
     color: #333;
     line-height: 1.6;
 }
+
 
 /* Nếu là trang đăng nhập, áp dụng một số style riêng */
 body.login-page {
@@ -20,13 +22,13 @@ body.login-page {
 /* ---------------- Header ---------------- */
 /* Header chính */
 header {
-    background-color: rgba(51, 51, 51, 0.6);
+    background-color: transparent;
     color: white;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1000;
+    z-index: 1;
     backdrop-filter: blur(5px);
 }
 
@@ -39,15 +41,47 @@ header {
     position: relative;
     flex-wrap: wrap;
 }
+header,
+#header1,
+#header2,
+#header1 h1,
+#header2 nav a {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, DejaVu Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+}
+header,
+#header1,
+#header2,
+#header2 nav a {
+    color: black !important;
+}
 
-/* Logo */
+
 #left h1 {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, DejaVu Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
     font-size: 24px;
-    font-family: 'Arial', sans-serif;
+    text-transform: uppercase;
+    display: inline-block;
+    background: linear-gradient(
+        270deg,
+        #ffcccc,
+        #fff0b3,
+        #ffffcc,
+        #ccffcc,
+        #ccffff,
+        #ccccff,
+        #f3ccff,
+        #ffcccc  /* lặp lại để chuyển động trơn tru */
+    );
+    background-size: 800%; /* to hơn để thấy rõ chuyển động */
+    background-repeat: no-repeat;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: bold;
+    animation: gradientMove 8s ease-in-out infinite;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
-#left h1:hover {
-    color: #f0a500;
-}
+
 
 /* Liên kết đăng nhập, đăng ký (phần bên phải) */
 #right {
@@ -57,7 +91,7 @@ header {
 
 }
 #right a {
-    color: white;
+    color: black;
     text-decoration: none;
     margin-left: 15px;
     font-size: 16px;
@@ -96,7 +130,7 @@ header {
 
 /* Header phụ (menu) */
 #header2 {
-    background-color: rgba(68, 68, 68, 0.6);
+    background-color: transparent;
     padding: 5px 0;
     position: relative;
 }
@@ -129,28 +163,111 @@ nav a:hover {
     background-color: gray;
 }
 
-/* ---------------- Banner ---------------- */
-#banner {
-    text-align: center;
-    background-color: #DDD;
-    padding: 20px;
-    margin-top: 100px;
-}
-#banner img {
-    width: 90%;
-    height: 350px;
-    display: block;
-    margin: 0 auto;
-    border-radius: 10px;
+/* Wrapper ảnh */
+.banner-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 120px;
+    z-index: 0; /* nằm dưới header, trên phần nền */
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+    border-radius: 0;
+    overflow: hidden;
+    transition: background-color 0.5s ease;
 }
 
+
+
+/* Container giữ ảnh, bỏ tỷ lệ cố định */
+.banner-container {
+    width: 900px;        /* cố định chiều rộng theo pixel */
+    height: 400px;       /* cố định chiều cao theo pixel */
+    position: relative;
+}
+/* Banner */
+#banner {
+    position: relative;
+    top: 40;
+    left: 0;
+    width: 100%; /* Chiều rộng của ảnh chiếm toàn bộ container */
+    height: 100%; /* Cố định chiều cao của ảnh */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Các ảnh */
+.banner-img {
+    position: relative;
+    width: 100%;  /* Đảm bảo ảnh chiếm hết chiều rộng của container */
+    height: 100%;  /* Cố định chiều cao ảnh */
+    object-fit: cover;  /* Giữ tỷ lệ ảnh và cắt bớt nếu cần */
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+/* Ảnh chính */
+.current-img {
+    z-index: 2;
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Ảnh prev và next */
+.prev-img,
+.next-img {
+    width: 50%; /* Chiều rộng là 50% của ảnh chính */
+    opacity: 0.5;
+    z-index: 1;
+    transform: scale(0.8);
+}
+
+/* Vị trí prev và next */
+.prev-img {
+    left: 0;
+    transform: scale(0.8) translateX(-20px); /* dịch ảnh prev sang trái 20px */
+}
+
+.next-img {
+    right: 0;
+    transform: scale(0.8) translateX(20px); /* dịch ảnh next sang phải 20px */
+}
+
+/* Hiệu ứng fade in và fade out nhanh hơn */
+.fade-in {
+    animation: fadeIn 0.25s forwards;
+  }
+  
+  .fade-out {
+    animation: fadeOut 0.25s forwards;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  .banner-wrapper {
+    transition: background-color 0.5s ease; /* thời gian chuyển màu từ từ (0.5s) */
+}
+
+  
 /* ---------------- Content ---------------- */
 .content {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    padding: 5px;
     padding-bottom: 100px;
     flex-wrap: wrap;
+    margin-top:520px;
 }
 
 /* Left content */
@@ -234,26 +351,19 @@ nav a:hover {
     text-align: center;
     font-size: 18px;
 }
-/* Rank đầu tiên: màu cam rực rỡ */
+
 .ranking-list .ranking-item:nth-child(1) .rank {
-    color: #FF4500; /* OrangeRed */
+    color: #FF4500;
 }
-
-/* Rank thứ hai: màu xanh dương tươi sáng */
 .ranking-list .ranking-item:nth-child(2) .rank {
-    color: #1E90FF; /* DodgerBlue */
+    color: #1E90FF; 
 }
-
-/* Rank thứ ba: màu xanh lá cây tươi */
 .ranking-list .ranking-item:nth-child(3) .rank {
-    color: #32CD32; /* LimeGreen */
+    color: #32CD32; 
 }
-
-/* Các rank khác dùng màu mặc định (nếu cần) */
 .rank {
     color: #f0a500;
 }
-
 .manga-image {
     width: 25%;
     height: auto;
@@ -272,7 +382,7 @@ nav a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 169px; /* Cố định chiều rộng để tạo khối rõ ràng */
+    width: 169px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -333,7 +443,19 @@ nav a:hover {
     color: #f0a500;
     text-decoration: underline;
 }
+.manga-info img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
+.manga-info img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+.manga-info a:hover{
+    color: #f0a500;
+    text-decoration: underline;
+    transform: scale(1.1);
+}
 /* ---------------- Comments ---------------- */
 #comments {
     margin-top: 30px;
@@ -390,6 +512,28 @@ nav a:hover {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+#scrollToTopBtn {
+    position: fixed;
+    bottom: 45px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: #f0a500;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    display: none; /* Ẩn mặc định */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: background-color 0.3s ease;
+}
+#scrollToTopBtn:hover {
+    background-color: #d88f00;
+}
 
 /* ---------------- Footer ---------------- */
 footer {
@@ -424,6 +568,7 @@ footer p {
     /* 2. Content: chuyển sang xếp chồng dọc */
     .content {
         flex-direction: column;
+        margin-top:0px;
     }
     .content .left,
     .content .right {
@@ -439,17 +584,63 @@ footer p {
         font-size: 10pt;
     }
 
-    /* 4. Banner */
-    #banner img {
-        width: 100%;
-        height: 200px;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 0;
-        margin-top: 0;
-        border-radius: 10px;
-    }
+/* 4. Banner Wrapper */
+.banner-wrapper {
+    position: relative;
+    width: 100%;
+    margin-top: 100px;
+    background-color: #DDD;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+#banner {
+    width: 90%;
+    max-width: 1792px;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 10px;
+    position: relative;
+    z-index: 1;
+}
+#banner img {
+    width: 900px; /* cố định chiều rộng */
+    height: 400px; /* cố định chiều cao */
+    object-fit: cover;
+    display: block;
+}
+
+
+/* Nút prev & next */
+.banner-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 2;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.banner-btn:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.banner-btn.prev {
+    left: 5%;
+}
+
+.banner-btn.next {
+    right: 5%;
+}
+    /* Ngoài Lề */   
     .content .left {
         margin-top: 0;
     }
@@ -495,7 +686,7 @@ footer p {
     .ranking-item {
         display: flex;
         align-items: center;
-        justify-content: space-between; /* Đẩy title và views về hai bên */
+        justify-content: space-between;
         flex-wrap: nowrap;
         padding: 10px;
     }
@@ -511,8 +702,11 @@ footer p {
     
     /* 9. Views: kích thước cố định để hiển thị sát bên phải */
     .ranking-item .views {
-        width: 60px;  /* Hoặc điều chỉnh theo ý muốn */
+        width: 60px;  
         text-align: right;
     }
+    
+}
+@media only screen and (min-width: 767px) {
 }
 
