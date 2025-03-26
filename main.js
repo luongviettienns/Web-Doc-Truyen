@@ -21,8 +21,6 @@ document.getElementById("scrollToTopBtn").addEventListener("click", function () 
 // ==============================
 // CHUYỂN ẢNH BANNER (3 ẢNH: PREV - CURRENT - NEXT)
 // ==============================
-
-// Danh sách ảnh banner
 const bannerImages = [
     "images/banner.png",
     "images/banner2.jpg",
@@ -33,12 +31,10 @@ const bannerImages = [
 
 let currentIndex = 0;
 
-// DOM các thẻ ảnh
 const imgPrev = document.getElementById("banner-prev");
 const imgCurrent = document.getElementById("banner-current");
 const imgNext = document.getElementById("banner-next");
 
-// Khai báo chung
 const colorThief = new ColorThief();
 const bannerWrapper = document.getElementById('banner-wrapper');
 
@@ -57,30 +53,37 @@ function updateBanner() {
         imgCurrent.classList.remove("fade-out");
         imgCurrent.classList.add("fade-in");
 
-        // Lấy màu sau khi ảnh tải xong
-        function setDominantColor() {
-            const dominantColor = colorThief.getColor(imgCurrent);
-            // Giảm thêm độ đậm của màu (pha thêm nhiều trắng)
-            const fadedColor = dominantColor.map(channel => Math.min(channel + 100, 255));
-            bannerWrapper.style.backgroundColor = `rgb(${fadedColor.join(',')})`;
-        }
-
-        if (imgCurrent.complete) {
+        if (imgCurrent.complete && imgCurrent.naturalHeight !== 0) {
             setDominantColor();
         } else {
             imgCurrent.onload = setDominantColor;
         }
-
-    }, 250); // thời gian animation hiện tại của bạn là 250ms
+    }, 250);
 }
- 
 
-// Khởi tạo lần đầu khi trang được tải
-window.addEventListener('load', updateBanner);
+function setDominantColor() {
+    try {
+        if (document.body.classList.contains("dark-mode")) {
+            // Sử dụng đúng màu nền trang ở dark mode
+            bannerWrapper.style.backgroundColor = "#121212";
+            return;
+        }
+
+        const rgb = colorThief.getColor(imgCurrent);
+        const finalColor = rgb.map(c => Math.min(c + 100, 255)); // làm sáng
+
+        bannerWrapper.style.backgroundColor = `rgb(${finalColor.join(',')})`;
+    } catch (e) {
+        console.warn("Không thể lấy màu ảnh banner:", e);
+    }
+}
 
 
 
-// Sự kiện click ảnh mờ prev/next
+// ==============================
+// Banner Navigation & Auto-slide
+// ==============================
+
 imgPrev.addEventListener("click", () => {
     currentIndex = (currentIndex - 1 + bannerImages.length) % bannerImages.length;
     updateBanner();
@@ -91,11 +94,95 @@ imgNext.addEventListener("click", () => {
     updateBanner();
 });
 
-// Tự động chạy mỗi 5 giây
 setInterval(() => {
     currentIndex = (currentIndex + 1) % bannerImages.length;
     updateBanner();
 }, 5000);
 
-// Khởi tạo khi load
-updateBanner();
+window.addEventListener("load", updateBanner);
+
+// ==============================
+// GỢI Ý TÌM KIẾM TRUYỆN THEO TỪ KHÓA
+// ==============================
+
+const searchInput = document.getElementById("searchInput");
+const suggestionList = document.getElementById("searchSuggestions");
+
+// Lấy tất cả tên truyện từ DOM (mục .manga-title trong .manga-info)
+const allTitles = Array.from(document.querySelectorAll(".manga-info a")).map(el => el.textContent.trim());
+
+searchInput.addEventListener("input", () => {
+    const keyword = searchInput.value.trim().toLowerCase();
+    suggestionList.innerHTML = "";
+
+    if (keyword === "") {
+        suggestionList.style.display = "none";
+        return;
+    }
+
+    const matched = Array.from(document.querySelectorAll(".manga-info")).filter(item => {
+        const title = item.querySelector("a").textContent.trim().toLowerCase();
+        return title.includes(keyword);
+    });
+
+    if (matched.length === 0) {
+        const li = document.createElement("li");
+        li.textContent = "Không tìm thấy truyện phù hợp";
+        li.classList.add("no-result");
+        suggestionList.appendChild(li);
+        suggestionList.style.display = "block";
+        return;
+    }
+
+    matched.slice(0, 5).forEach((item, index) => {
+        const titleText = item.querySelector("a").textContent.trim();
+        const imgSrc = item.querySelector("img").src;
+
+        const regex = new RegExp(`(${keyword})`, 'gi');
+        const highlightedTitle = titleText.replace(regex, `<mark style="background: #fff176; padding: 0 2px;">$1</mark>`);
+
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <span class="index">${index + 1}</span>
+            <img src="${imgSrc}" alt="ảnh truyện">
+            <span class="title">${highlightedTitle}</span>
+        `;
+
+        li.addEventListener("click", () => {
+            searchInput.value = titleText;
+            suggestionList.style.display = "none";
+        });
+
+        suggestionList.appendChild(li);
+    });
+
+    suggestionList.style.display = "block";
+});
+
+// Ẩn dropdown khi click ra ngoài
+document.addEventListener("click", (e) => {
+    if (!searchInput.contains(e.target) && !suggestionList.contains(e.target)) {
+        suggestionList.style.display = "none";
+    }
+});
+
+// ==============================
+// DARK MODE TOGGLE SWITCH
+// ==============================
+
+const toggle = document.getElementById("darkModeToggle");
+
+if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+    toggle.checked = true;
+}
+
+toggle.addEventListener("change", () => {
+    if (toggle.checked) {
+        document.body.classList.add("dark-mode");
+        localStorage.setItem("theme", "dark");
+    } else {
+        document.body.classList.remove("dark-mode");
+        localStorage.setItem("theme", "light");
+    }
+});

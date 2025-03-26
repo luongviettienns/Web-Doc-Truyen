@@ -162,6 +162,129 @@ nav a {
 nav a:hover {
     background-color: gray;
 }
+/* TOGGLE SWITCH DARK/LIGHT */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+    margin-left: 15px;
+  }
+  
+  .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .switch-label {
+    position: absolute;
+    cursor: pointer;
+    background-color: #ccc;
+    border-radius: 34px;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.3s ease;
+  }
+  
+  .switch-inner {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+  }
+  
+  .toggle-switch input:checked + .switch-label {
+    background-color: #4d4d4d;
+  }
+  
+  .toggle-switch input:checked + .switch-label .switch-inner {
+    transform: translateX(24px);
+  }
+  
+#searchSuggestions {
+    position: absolute;
+    background: white;
+    width: 320px;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden; /* Ẩn cuộn ngang */
+    list-style: none;
+    border-radius: 10px;
+    margin-top: 5px;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    animation: fadeIn 0.3s ease-in-out;
+    font-family: "Poppins", sans-serif;
+    border: 1px solid #ddd;
+}
+
+#searchSuggestions li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #f0f0f0;
+    max-width: 100%;    
+}
+#searchSuggestions li.no-result {
+    padding: 12px;
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    cursor: default;
+    border-bottom: none;
+    white-space: normal;
+}
+
+
+
+#searchSuggestions li:last-child {
+    border-bottom: none;
+}
+
+#searchSuggestions li:hover {
+    background-color: #fff9ec;
+    transform: scale(1.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+#searchSuggestions li img {
+    width: 45px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #eee;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+#searchSuggestions li span.title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+#searchSuggestions li span.index {
+    font-weight: bold;
+    color: #f0a500;
+    font-size: 16px;
+    min-width: 20px;
+}
+
 
 /* Wrapper ảnh */
 .banner-wrapper {
@@ -552,6 +675,135 @@ footer p {
     padding: 10px 0;
     font-size: 10pt;
 }
+/* =================== DARK MODE =================== */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+  }
+  
+  /* Nền trắng → nền tối */
+  body.dark-mode header,
+  body.dark-mode footer,
+  body.dark-mode .content .left,
+  body.dark-mode .content .right,
+  body.dark-mode #rankings,
+  body.dark-mode #comments,
+  body.dark-mode .card,
+  body.dark-mode .ranking-item,
+  body.dark-mode .manga-info,
+  body.dark-mode #searchSuggestions,
+  body.dark-mode .form .input,
+  body.dark-mode .form .submit,
+  body.dark-mode .comment-item {
+    background-color: #1e1e1e !important;
+    color: #ffffff !important;
+    border-color: #444 !important;
+  }
+  
+  /* Logo giữ nguyên (h1 trong header left), KHÔNG đổi màu */
+  body.dark-mode #left h1 {
+    color: transparent !important;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+  }
+  
+/* Search button trong dark mode: nổi bật hơn */
+body.dark-mode #searchBtn {
+    background-color: #00bcd4 !important;
+    color: #ffffff !important;
+    border: none;
+  }
+  
+  body.dark-mode #searchBtn:hover {
+    background-color: #0097a7 !important;
+  }
+  
+  /* Màu chữ đen → trắng */
+  body.dark-mode h2,
+  body.dark-mode h3,
+  body.dark-mode p,
+  body.dark-mode span,
+  body.dark-mode li,
+  body.dark-mode label {
+    color: #ffffff !important;
+  }
+  
+  /* Menu (nav a trong header2) → trắng */
+  body.dark-mode #header2 nav a {
+    color: #ffffff !important;
+  }
+  body.dark-mode #header2 nav a:hover {
+    background-color: #333333 !important;
+  }
+  
+  /* Link chung */
+  body.dark-mode a:not(#searchBtn) {
+    color: #ffffff !important;
+  }
+  body.dark-mode a:not(#searchBtn):hover {
+    color: #f0a500 !important;
+  }
+  
+  /* Input, button, textarea */
+  body.dark-mode input,
+  body.dark-mode button,
+  body.dark-mode textarea {
+    background-color: #2b2b2b !important;
+    color: #ffffff !important;
+    border: 1px solid #555 !important;
+  }
+  
+  /* Xếp hạng nổi bật */
+  body.dark-mode .ranking-item .rank {
+    color: #f0a500 !important;
+  }
+  
+  /* Manga title hover */
+  body.dark-mode .manga-info a:hover {
+    color: #f0a500 !important;
+    text-decoration: underline;
+  }
+  
+  /* Nút gửi trong form */
+  body.dark-mode .form .submit:hover {
+    background-color: #2c2c2c !important;
+  }
+  
+  /* Gợi ý tìm kiếm */
+  body.dark-mode #searchSuggestions li {
+    background-color: #1e1e1e;
+    color: white;
+    border-bottom: 1px solid #444;
+  }
+  body.dark-mode #searchSuggestions li:hover {
+    background-color: #2a2a2a;
+  }
+  
+/* =================== TRANSITION (HIỆU ỨNG MƯỢT) =================== */
+body,
+header,
+footer,
+.card,
+.content .left,
+.content .right,
+#rankings,
+#comments,
+input,
+button,
+textarea,
+nav a,
+a,
+h1,
+h2,
+h3,
+p,
+span,
+li,
+label,
+#searchSuggestions {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
 
 /* ---------------- Responsive (Mobile) ---------------- */
 @media only screen and (max-width: 767px) {
@@ -594,6 +846,7 @@ footer p {
     justify-content: center;
     align-items: center;
     padding: 20px 0;
+    transition: background-color 0.4s ease;
 }
 
 #banner {
@@ -706,7 +959,5 @@ footer p {
         text-align: right;
     }
     
-}
-@media only screen and (min-width: 767px) {
 }
 
