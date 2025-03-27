@@ -3,10 +3,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    cursor: none !important;
+  
+      
 }
 
 body {
-
+    cursor: none; 
     font-family: Arial, sans-serif;
     background-color: #DDD;
     color: #333;
@@ -120,7 +123,6 @@ header,
     margin-left: 5px;
     border-radius: 5px;
     border: none;
-    cursor: pointer;
     background-color: #f0a500;
     color: white;
 }
@@ -179,7 +181,7 @@ nav a:hover {
   
   .switch-label {
     position: absolute;
-    cursor: pointer;
+
     background-color: #ccc;
     border-radius: 34px;
     width: 100%;
@@ -231,7 +233,7 @@ nav a:hover {
     align-items: center;
     gap: 10px;
     padding: 12px 14px;
-    cursor: pointer;
+
     transition: all 0.2s ease;
     border-bottom: 1px solid #f0f0f0;
     max-width: 100%;    
@@ -241,7 +243,7 @@ nav a:hover {
     text-align: center;
     color: #888;
     font-style: italic;
-    cursor: default;
+
     border-bottom: none;
     white-space: normal;
 }
@@ -329,7 +331,7 @@ nav a:hover {
     height: 100%;  /* Cố định chiều cao ảnh */
     object-fit: cover;  /* Giữ tỷ lệ ảnh và cắt bớt nếu cần */
     border-radius: 10px;
-    cursor: pointer;
+   
     transition: all 0.5s ease;
 }
 
@@ -435,7 +437,7 @@ nav a:hover {
     font-size: 16pt;
     font-weight: bold;
     color: #333;
-    cursor: pointer;
+
     transition: color 0.3s ease;
     text-align: center;
     padding: 10px;
@@ -632,7 +634,7 @@ nav a:hover {
 }
 .comment-item:hover {
     background-color: #f0f0f0;
-    cursor: pointer;
+
     transition: background-color 0.3s ease;
 }
 #scrollToTopBtn {
@@ -646,7 +648,7 @@ nav a:hover {
     border: none;
     border-radius: 50%;
     font-size: 20px;
-    cursor: pointer;
+
     box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     display: none; /* Ẩn mặc định */
     justify-content: center;
@@ -675,6 +677,124 @@ footer p {
     padding: 10px 0;
     font-size: 10pt;
 }
+/* === Tail Cursor chính === */
+#tail-cursor {
+    position: fixed;
+    width: 54px;
+    height: 54px;
+    pointer-events: none;
+    z-index: 999999;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -50%);
+    animation: pulse 1.5s ease-in-out infinite alternate;
+  }
+  #tail-cursor .core {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: red;
+    animation: coreColor 12s linear infinite;
+    margin: auto;
+    position: absolute;
+    top: 18px;
+    left: 18px;
+  }
+  #tail-cursor::before {
+    content: "";
+    position: absolute;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background-color: red;
+    filter: blur(18px);
+    opacity: 0.5;
+    animation: outerGlow 12s linear infinite;
+  }
+  
+  /* === Trail đuôi cursor === */
+  .cursor-trail {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.5;
+    filter: blur(6px);
+    transform: translate(-50%, -50%);
+    transition: background-color 0.2s, box-shadow 0.2s;
+  }
+  
+  /* === Ripple khi click === */
+  .click-ripple {
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    background-color: transparent;
+    border: 2px solid currentColor;
+    box-shadow: 0 0 20px currentColor;
+    transform: translate(-50%, -50%) scale(0.3);
+    animation: ripplePop 0.5s ease-out forwards;
+  }
+  @keyframes ripplePop {
+    0% {
+      transform: translate(-50%, -50%) scale(0.3);
+      opacity: 0.8;
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.5);
+      opacity: 0.4;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(0.6);
+      opacity: 0;
+    }
+  }
+  
+  /* === Particle pixel vỡ vụn === */
+  .particle {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    pointer-events: none;
+    z-index: 9999;
+    background-color: #00ff00;
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+  }
+  
+  /* === Animation màu rainbow (cursor core & glow) === */
+  @keyframes coreColor {
+    0%   { background-color: #ff0000; }
+    16%  { background-color: #ff8000; }
+    32%  { background-color: #ffff00; }
+    48%  { background-color: #00ff00; }
+    64%  { background-color: #00bfff; }
+    80%  { background-color: #4b0082; }
+    100% { background-color: #9400d3; }
+  }
+  @keyframes outerGlow {
+    0%   { background-color: #ff0000; }
+    16%  { background-color: #ff8000; }
+    32%  { background-color: #ffff00; }
+    48%  { background-color: #00ff00; }
+    64%  { background-color: #00bfff; }
+    80%  { background-color: #4b0082; }
+    100% { background-color: #9400d3; }
+  }
+  @keyframes pulse {
+    from {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0.8;
+    }
+    to {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 1;
+    }
+  }
 /* =================== DARK MODE =================== */
 body.dark-mode {
     background-color: #121212;
@@ -876,7 +996,6 @@ label,
     border: none;
     padding: 10px 16px;
     font-size: 24px;
-    cursor: pointer;
     z-index: 2;
     border-radius: 50%;
     transition: background-color 0.3s ease;
